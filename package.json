@@ -2,6 +2,7 @@
   "name": "print-cart-xpress",
   "version": "0.1.0",
   "private": true,
+  "author": "Eric Trotchie",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
