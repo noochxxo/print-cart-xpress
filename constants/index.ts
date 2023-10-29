@@ -6,6 +6,11 @@ export const NavLinks = [
 ]
 
 export interface PrintfulProduct {
-  id: string;
-  name: string;
+      id: number,
+      external_id: string,
+      name: string,
+      variants: number,
+      synced: number,
+      thumbnail_url: string,
+      is_ignored: boolean
 }

@@ -1,7 +1,8 @@
-import { connectToPrintfulAPI, fetchAllPrintfulProducts } from "@/lib/actions";
+import { connectToPrintfulAPI, fetchAllPrintfulProducts } from "@/lib/actions"
 import { ItemGrid } from '@/components/ItemGrid'
+import { PrintfulProduct } from "@/constants"
 
-export default function Home() {
+export default async function Home() {
 
   // TODO: Fetch all products
   
@@ -10,22 +11,28 @@ const token: string  = process.env.PRINTFUL_API_KEY || ''
 
   async function getAllProducts() {
     try {
-      const apiConnection = await connectToPrintfulAPI(token);
+      const apiConnection = await connectToPrintfulAPI(token)
       
-      const data = await fetchAllPrintfulProducts(apiConnection, "sync/products", { limit: 10 });
-      console.log(data);
+      const allProducts = await fetchAllPrintfulProducts(apiConnection, "sync/products", { limit: 6 })
+      
+      const pageProducts =  await allProducts.result.map( (product: PrintfulProduct) => product )
+  
+      
+      return pageProducts
+
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error)
     }
   }
 
-getAllProducts();
+  const products: PrintfulProduct[] =  await getAllProducts();
+  
 
   return (
     <main className="auto">
       <h1>Print Cart Xpress</h1>
       
-      <ItemGrid />
+      <ItemGrid products={ products }/>
       
     </main>
   )
