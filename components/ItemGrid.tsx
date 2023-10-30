@@ -5,14 +5,24 @@ type Props = {
   products: PrintfulProduct[]
 }
 
-export const ItemGrid = (  products: Props ) => {
+export const ItemGrid = ( { products }: Props ) => {
 
-  // products[0].map(item => console.log(item))
-  console.log(products)
+  if( products?.length === 0 ) {
+    return (
+      <p>No Products in the store.</p>
+    )
+  }
 
-  return (
+  return ( 
     <div className='grid grid-flow-row-dense grid-cols-3 gap-4 justify-items-center'>
-      <Item />
+
+      {
+        products?.map( ( product ) => (
+          <Item key={ product.id } product={ product } />
+        ) )
+      }
+
+      
     </div>
   )
 }

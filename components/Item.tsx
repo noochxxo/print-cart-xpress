@@ -1,36 +1,35 @@
+import { PrintfulProduct } from '@/constants'
 import Image from 'next/image'
+import VariantPicker from './VariantPicker'
 
-export const Item = () => {
+type Props = {
+  product: PrintfulProduct
+}
+
+export const Item = ( { product }: Props ) => {
   return (
     <div className='card card-compact w-96 bg-neutral/50 shadow-xl'>
       <figure>
         <Image
-          src='/shoe.jpg'
+          src={ product.sync_product.thumbnail_url }
           width='928'
           height='548'
-          alt='Shoes' />
+          alt={ product.sync_product.name } />
       </figure>
 
       <div className='card-body'>
         <h2 className='card-title'>
-          Shoes
+          { product.sync_product.name }
           <span className='badge badge-secondary'>New</span>
         </h2>
         <p>
-          $120.00 CAD
+          {/* The price assumes all product variants are the same price */}
+          ${product.sync_variants[0].retail_price} {product.sync_variants[0].currency}
         </p>
 
-        <select className='select select-primary w-full max-w-xs'>
-          {/* TODO: Create a component */}
-          <option disabled>Shoe Size</option>
-          <option>8.5</option>
-          <option>9.5</option>
-          <option>10.5</option>
-          <option>11.5
-export default ItemGrid</option>
-        </select>
+        <VariantPicker key={product?.sync_product?.id} variants={ product.sync_variants } />
 
-        <div className='card-actions justify-end'>
+        <div className='card-actions justify-center'>
           <button className='btn btn-primary'>Buy Now</button>
         </div>
       </div>
